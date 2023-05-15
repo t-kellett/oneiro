@@ -16,3 +16,5 @@ def test_loan_has_correct_attributes(simple_loan):
     assert simple_loan.margin == 2
 
 
+def test_loan_gets_total_interest_rate(simple_loan):
+    assert simple_loan.get_total_interest() == 6.5

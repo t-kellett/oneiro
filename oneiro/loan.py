@@ -10,4 +10,7 @@ class SimpleLoan:
     currency: str
     base_rate: decimal
     margin: decimal
+
+    def get_total_interest(self):
+        return self.base_rate + self.margin
     
