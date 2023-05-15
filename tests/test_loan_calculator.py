@@ -29,10 +29,21 @@ loan = SimpleLoan(start_date_str='2022-01-01', end_date='2022-12-31', principal=
                   currency='USD', base_rate=0.05, margin=0.02)
 
 
+def test_loan_calculator_gets_daily_interest_amount():
+    day_of_calculation = datetime.strptime('2022-05-01', '%Y-%m-%d')
+    delta = day_of_calculation - loan.get_start_date()
+
+    expected_result = loan.base_rate/365
+
+    assert SimpleLoanCalculator.get_daily_base_interest(loan) == expected_result
+
+
 def test_loan_calculation_returns_daily_interest_no_margin():
     day_of_calculation = datetime.strptime('2022-05-01', '%Y-%m-%d')
     delta = day_of_calculation - loan.get_start_date()
     
-    expected_result = 0.05/delta.days
+    expected_result = loan.base_rate/365 * delta.days
 
     assert SimpleLoanCalculator.daily_base_interest_accrual(loan, day_of_calculation) == expected_result
+
+
