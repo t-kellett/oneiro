@@ -8,27 +8,30 @@ from oneiro.simple_loan_calculator import SimpleLoanCalculator
 @pytest.fixture
 def setup(monkeypatch):
     class MockSimpleLoan:
-        def __init__(self, start_date, end_date, principal, currency, base_rate, margin):
-            self.start_date = start_date
+        def __init__(self, start_date_str, end_date, principal, currency, base_rate, margin):
+            self.start_date_str = start_date_str
             self.end_date = end_date
             self.principal = principal
             self.currency = currency
             self.base_rate = base_rate
             self.margin = margin
 
-        def get_interest_rate(self) -> decimal:
+        def get_start_date(self):
+            return datetime.strptime(self.start_date_str, '%Y-%m-%d')
+        
+        def get_total_interest(self) -> decimal:
             return self.base_rate + self.margin
 
     monkeypatch.setattr('oneiro.loan', MockSimpleLoan)
     
 
-loan = SimpleLoan(start_date=datetime.strptime('2022-01-01', '%Y-%m-%d'), end_date='2022-12-31', principal=20000,
+loan = SimpleLoan(start_date_str='2022-01-01', end_date='2022-12-31', principal=20000,
                   currency='USD', base_rate=0.05, margin=0.02)
 
 
 def test_loan_calculation_returns_daily_interest_no_margin():
     day_of_calculation = datetime.strptime('2022-05-01', '%Y-%m-%d')
-    delta = day_of_calculation - loan.start_date
+    delta = day_of_calculation - loan.get_start_date()
     
     expected_result = 0.05/delta.days
 
