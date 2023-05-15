@@ -41,7 +41,6 @@ def test_loan_calculator_gets_correct_loan_days():
 
 
 def test_loan_calculator_gets_daily_interest_amount():
-    day_of_calculation = datetime.strptime('2022-05-01', '%Y-%m-%d')
     delta = loan.get_end_date() - loan.get_start_date()
 
     expected_result = loan.base_rate/delta.days
