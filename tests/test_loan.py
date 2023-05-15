@@ -1,6 +1,6 @@
 import pytest
 
-from oneiro.loan import SimpleLoan
+from oneiro.simple_loan import SimpleLoan
 
 
 @pytest.fixture
