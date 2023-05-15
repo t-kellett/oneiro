@@ -2,9 +2,11 @@ from dataclasses import dataclass, field
 from datetime import datetime
 import decimal
 
+from oneiro.loan_proto import Loan
+
 
 @dataclass
-class SimpleLoan:
+class SimpleLoan(Loan):
     start_date_str: str
     end_date_str: str
     principal: decimal

@@ -1,6 +1,7 @@
 from datetime import datetime
 import decimal
 import pytest
+from oneiro.loan_proto import Loan
 
 from oneiro.simple_loan import SimpleLoan
 
@@ -15,7 +16,7 @@ def end_date():
 
 @pytest.fixture
 def mock_loan(monkeypatch, start_date, end_date):
-    class MockSimpleLoan:
+    class MockSimpleLoan(Loan):
         def __init__(self, start_date_str, end_date, principal, currency, base_rate, margin):
             self.start_date_str = start_date_str
             self.end_date = end_date
