@@ -14,3 +14,6 @@ class SimpleLoanCalculator:
     def accrued_interest_to_date(loan: SimpleLoan, day_of_calc: datetime) -> decimal:
         delta = day_of_calc - loan.get_start_date()
         return SimpleLoanCalculator.get_daily_base_interest(loan) * delta.days
+    
+    def get_loan_term_interest(loan: SimpleLoan) -> decimal:
+        return loan.principal * SimpleLoanCalculator.get_loan_days(loan)/365 * loan.get_total_interest()
